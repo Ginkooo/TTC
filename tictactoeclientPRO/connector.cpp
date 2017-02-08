@@ -31,4 +31,5 @@ void Connector::connectClicked()
         ui->cantConnectLabel->setVisible(true);
         return;
     }
+    controller->proceedToLobby();
 }

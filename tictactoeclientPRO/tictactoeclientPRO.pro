@@ -29,15 +29,20 @@ SOURCES += main.cpp\
     message.cpp \
     connector.cpp \
     controller.cpp \
-    lobby.cpp
+    lobby.cpp \
+    gamewindow.cpp \
+    game.cpp
 
 HEADERS  += \
     ttcsocket.h \
     message.h \
     connector.h \
     controller.h \
-    lobby.h
+    lobby.h \
+    gamewindow.h \
+    game.h
 
 FORMS    += \
     connector.ui \
-    lobby.ui
+    lobby.ui \
+    gamewindow.ui

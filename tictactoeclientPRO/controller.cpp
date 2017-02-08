@@ -24,7 +24,8 @@ bool Controller::connect(QString host, QString login)
     {
         return false;
     }
-    proceedToLobby();
+
+    return true;
 }
 
 void Controller::proceedToLobby()
@@ -41,6 +42,19 @@ void Controller::handleGameMessage(Message message)
         updateUserList(message.param);
     if (message.command == "GRQ")
         setChallanged(message.param);
+    if (message.command == "GST")
+        startMatch(message.param);
+    if (message.command == "ERR")
+        showError(message.param);
+    if (message.command == "GRE")
+        showGameResultAndBackToLobby(message.param);
+}
+
+void Controller::showError(QString errorMsg)
+{
+    QMessageBox messageBox;
+    messageBox.setText(errorMsg);
+    messageBox.exec();
 }
 
 void Controller::updateUserList(QString stringList)
@@ -49,9 +63,15 @@ void Controller::updateUserList(QString stringList)
     lobby->updateUserList(list);
 }
 
-void Controller::startMatch()
+void Controller::matchAccepted()
 {
-    qDebug() << "Match started!";
+    ttcsocket->send("AGR");
+}
+
+void Controller::startMatch(QString opponentName)
+{
+    lobby->hide();
+    game = new Game(opponentName);
 }
 
 void Controller::challange(QString username)
@@ -62,4 +82,11 @@ void Controller::challange(QString username)
 void Controller::setChallanged(QString text)
 {
     lobby->setChallangedText(text);
+}
+
+void Controller::showGameResultAndBackToLobby(QString gameResultText)
+{
+    QMessageBox messageBox;
+    messageBox.setText(gameResultText);
+    messageBox.exec();
 }

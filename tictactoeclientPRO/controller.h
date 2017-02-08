@@ -7,6 +7,8 @@
 #include <QDebug>
 #include "message.h"
 #include "lobby.h"
+#include <QMessageBox>
+#include "game.h"
 
 class Lobby;
 class Connector;
@@ -19,17 +21,21 @@ public:
     bool connect(QString host, QString login);
     static Controller* controller;
     void handleGameMessage(Message message);
-    void startMatch();
+    void matchAccepted();
     void challange(QString username);
+    void proceedToLobby();
 
 private:
     TTCSocket* ttcsocket;
     Connector* connector;
     Lobby* lobby;
+    Game* game;
 
-    void proceedToLobby();
+    void showError(QString errorMsg);
     void updateUserList(QString stringList);
     void setChallanged(QString text);
+    void startMatch(QString opponentName);
+    void showGameResultAndBackToLobby(QString gameResultText);
 };
 
 #endif // CONTROLLER_H

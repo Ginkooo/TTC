@@ -39,6 +39,7 @@ public slots:
     void sendGameboard(User* user);
     void sendTurn(User* user);
     void sendUserListToAll();
+    void sendFigure(User* user);
 
 };
 

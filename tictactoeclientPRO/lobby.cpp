@@ -20,7 +20,7 @@ Lobby::~Lobby()
 
 void Lobby::acceptButtonClicked()
 {
-    controller->startMatch();
+    controller->matchAccepted();
 }
 
 void Lobby::challangeButtonClicked()
@@ -39,4 +39,5 @@ void Lobby::setChallangedText(QString text)
 {
     ui->challangedLabel->setText(text);
     ui->challangedLabel->setVisible(true);
+    ui->acceptButton->setVisible(true);
 }

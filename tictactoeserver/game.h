@@ -18,6 +18,7 @@ public:
     bool checkDraw();
     QString getGameboard();
     User* getTurn();
+    int getFigure(User* user);
 
 private:
     User* player1;

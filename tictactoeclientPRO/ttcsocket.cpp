@@ -8,6 +8,7 @@ TTCSocket::TTCSocket()
 void TTCSocket::handleInput()
 {
     QString message = this->readAll();
+    qDebug() << message;
     if (message.length() < 3)
     {
         qDebug() << "Message is too short!";

@@ -28,6 +28,14 @@ Game::Game(User* player1, User* player2)
         turnOf = player2;
 }
 
+int Game::getFigure(User* user)
+{
+    if (user == player1)
+        return player1Figure;
+    else
+        return player2Figure;
+}
+
 User* Game::getTurn()
 {
     return turnOf;

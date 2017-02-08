@@ -67,6 +67,10 @@ void TTCServer::read(User* user)
     {
         sendTurn(user);
     }
+    if (message.command == "GFG")
+    {
+        sendFigure(user);
+    }
    user->flushStream();
    emit readCompleted();
 
@@ -100,6 +104,21 @@ void TTCServer::sendLogins(User* user)
     write(user, message);
 }
 
+void TTCServer::sendFigure(User* user)
+{
+    int figure = user->getGame()->getFigure(user);
+    QString figureString;
+    if (figure == 1)
+    {
+        figureString = "CROSS";
+    }
+    else
+    {
+        figureString = "CIRCLE";
+    }
+    write(user, "FGR " + figureString);
+}
+
 void TTCServer::sendGameRequest(User* user, QString opponentLogin)
 {
     User* opponent = NULL;
@@ -120,7 +139,6 @@ void TTCServer::sendGameRequest(User* user, QString opponentLogin)
     
     write(opponent, "GRQ " + user->getName() + " wants to play with you");
     write(user, "WFA " + opponent->getName() + " is thinking...");
-    user->setChallanger(opponent);
     opponent->setChallanger(user);
 }
 
@@ -128,9 +146,10 @@ void TTCServer::startGame(User* user)
 {
     if (user->getChallanger() == NULL)
     {
-        write(user, "ERR cant start game, no opponent");
+        write(user, "ERR cant start game, no one have challanged you!");
         return;
     }
+    user->getChallanger()->setChallanger(user);
     write(user, "GST " + user->getChallanger()->getName());
     write(user->getChallanger(), "GST " + user->getName());
     Game* game = new Game(user, user->getChallanger());
